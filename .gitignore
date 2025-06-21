@@ -1,6 +1,8 @@
 # phishing_mcp_server/.gitignore
 mcp_env/
 credentials.json
+token.pickle
 token.json
 *.pyc
 __pycache__/
+

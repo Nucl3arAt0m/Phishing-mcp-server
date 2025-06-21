@@ -4,7 +4,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 @method
 def test_method():
-    return Success("Hello, MCP!")
+    return Success("Hello, MCP, PLEASE REPLY!")
 
 class JsonRpcHandler(BaseHTTPRequestHandler):
     def do_POST(self):
@@ -28,3 +28,4 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("Shutting down server")
         httpd.server_close()
+
