@@ -26,7 +26,7 @@ def main():
     # Build Gmail service
     service = build('gmail', 'v1', credentials=creds)
     # Fetch emails
-    results = service.users().messages().list(userId='me', maxResults=5).execute()
+    results = service.users().messages().list(userId='me', maxResults=10).execute()
     messages = results.get('messages', [])
     for msg in messages:
         msg_data = service.users().messages().get(userId='me', id=msg['id']).execute()
