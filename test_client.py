@@ -1,4 +1,3 @@
-# phishing_mcp_server/test_client.py
 import requests
 import json
 
