@@ -6,8 +6,11 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 import os
 import pickle
+from transformers import pipeline
 
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
+
+classifier = pipeline("text-classification", model="distilbert-base-uncased")
 
 def get_gmail_service():
     creds = None
@@ -43,7 +46,18 @@ def fetch_emails():
 
 @method
 def scan_phishing(text):
-    return Success(f"Placeholder: Scan text for phishing - {text}")
+    try:
+        if classifier is None:
+            return {"error": "Text classification model not available"}
+        result = classifier(text)
+        is_phishing = result[0]["label"] == "POSITIVE" and result[0]["score"] > 0.7
+        return Success({
+            "text": text,
+            "is_phishing": is_phishing,
+            "score": result[0]["score"]
+        })
+    except Exception as e:
+        return {"error": f"Phishing scan failed: {str(e)}"}
 
 class JsonRpcHandler(BaseHTTPRequestHandler):
     def do_POST(self):

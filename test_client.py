@@ -5,7 +5,8 @@ import json
 url = "http://localhost:5000"
 payload = {
     "jsonrpc": "2.0",
-    "method": "fetch_emails",
+    "method": "scan_phishing",
+    "params": {"text": "Urgent: Update your password now! or your data will be earsed!!"},
     "id": 1
 }
 
