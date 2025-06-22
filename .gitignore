@@ -3,6 +3,7 @@ mcp_env/
 credentials.json
 token.pickle
 token.json
+fuse.json
 *.pyc
 __pycache__/
 
