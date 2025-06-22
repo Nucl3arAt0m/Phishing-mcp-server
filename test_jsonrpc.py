@@ -28,4 +28,3 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("Shutting down server")
         httpd.server_close()
-
