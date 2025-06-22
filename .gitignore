@@ -5,4 +5,5 @@ token.pickle
 token.json
 *.pyc
 __pycache__/
-
+phishing_log.txt
+server_log.txt
