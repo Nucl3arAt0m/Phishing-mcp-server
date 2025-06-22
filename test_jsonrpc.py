@@ -1,4 +1,3 @@
-# phishing_mcp_server/test_jsonrpc.py
 from jsonrpcserver import method, dispatch, Success
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
@@ -8,12 +7,9 @@ def test_method():
 
 class JsonRpcHandler(BaseHTTPRequestHandler):
     def do_POST(self):
-        # Read request data
         content_length = int(self.headers['Content-Length'])
         request_data = self.rfile.read(content_length).decode('utf-8')
-        # Dispatch JSON-RPC request
         response = dispatch(request_data)
-        # Send response
         self.send_response(200)
         self.send_header('Content-Type', 'application/json')
         self.end_headers()
