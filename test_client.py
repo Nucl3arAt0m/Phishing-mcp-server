@@ -22,3 +22,4 @@ try:
         print("Unexpected response:", response_json)
 except Exception as e:
     print(f"Client error: {e}")
+    
