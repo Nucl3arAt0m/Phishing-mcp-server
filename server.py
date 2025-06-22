@@ -1,4 +1,3 @@
-# phishing_mcp_server/server.py
 import json
 from jsonrpcserver import method, dispatch, Success
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -12,14 +11,12 @@ from transformers import pipeline
 import socketserver
 import re
 
-# Set up logging
 logging.basicConfig(
     filename="server_log.txt",
     level=logging.INFO,
     format="%(asctime)s - %(message)s"
 )
 
-# Initialize DistilBERT
 classifier = pipeline("text-classification", model="distilbert-base-uncased")
 
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
@@ -72,19 +69,16 @@ def fetch_emails():
 @method
 def scan_phishing(text):
     try:
-        # Run DistilBERT classification
         result = classifier(text)
         distilbert_score = result[0]["score"]
         distilbert_label = result[0]["label"] == "POSITIVE" and distilbert_score > 0.55
-
-        # Keyword-based heuristic
         phishing_keywords = [
             r'\burgent\b', r'\blocked\b', r'\breset your password\b',
             r'\bclick this link\b', r'\bverify your account\b',
             r'\bdata will be erased\b', r'\baccount is locked\b'
         ]
         keyword_match = any(re.search(pattern, text, re.IGNORECASE) for pattern in phishing_keywords)
-        is_phishing = distilbert_label or keyword_match  # Combine DistilBERT and keywords
+        is_phishing = distilbert_label or keyword_match  
 
         logging.info(f"Scanned text: {text[:50]}... Phishing: {is_phishing} (Score: {distilbert_score:.2f}, Keywords: {keyword_match})")
         return Success({
